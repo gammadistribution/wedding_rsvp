@@ -1,0 +1,5 @@
+* Install postgresql on system
+** Create database labeled respondents
+** Create user and password to login to database
+* Create file ROOT/deploy/db_credentials with user and password to login
+* Change database backend to postgresql
