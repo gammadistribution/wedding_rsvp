@@ -45,6 +45,13 @@ TEMPLATE_DEBUG = DEBUG
 # ########## END DEBUG CONFIGURATION
 
 
+# ########## TEST RUNNER CONFIGURATION
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+# ########## END TEST RUNNER CONFIGURATION
+
+
 # ########## MANAGER CONFIGURATION
 
 # Admin and managers for this project. These people receive private site

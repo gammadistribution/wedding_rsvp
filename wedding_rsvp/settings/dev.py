@@ -3,7 +3,7 @@ import os
 import sys
 from os.path import dirname, realpath
 
-from jetpackjoust.settings.common import *
+from wedding_rsvp.settings.common import *
 
 
 # ########## DEBUG CONFIGURATION
@@ -49,7 +49,7 @@ def get_db_credentials():
                             'deploy', 'db_credentials')
     try:
         with open(location) as f:
-            lines = [line.strip('\n').split('\t') for line in f.readlines()]
+            lines = [line.strip('\n').split(';') for line in f.readlines()]
             credentials = {line[0]: line[1] for line in lines}
     except(IOError):
         sys.exit(1)
@@ -61,11 +61,11 @@ credentials = get_db_credentials()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jpj_content',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Responses',
         'USER': credentials['user'],
         'PASSWORD': credentials['password'],
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }
