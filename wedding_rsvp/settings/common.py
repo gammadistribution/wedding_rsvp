@@ -188,7 +188,10 @@ INSTALLED_APPS = (
 
     # Admin panel and documentation.
     'django.contrib.admin',
-    'django.contrib.admindocs'
+    'django.contrib.admindocs',
+
+    # User-defined apps
+    'rsvp'
 )
 
 # ########## END APP CONFIGURATION
