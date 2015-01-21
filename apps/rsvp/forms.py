@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from rsvp.models import Rsvp
+from rsvp import models
 
 
 class RsvpAttendanceForm(ModelForm):
@@ -7,7 +7,7 @@ class RsvpAttendanceForm(ModelForm):
     information about the person and attendance fields of the Rsvp model.
     """
     class Meta:
-        model = Rsvp
+        model = models.Rsvp
         fields = ['person',
                   'attendance']
 
@@ -19,6 +19,6 @@ class RsvpPreferenceForm(ModelForm):
     selected as False.
     """
     class Meta:
-        model = Rsvp
+        model = models.Rsvp
         fields = ['guests',
                   'meal_preference']
