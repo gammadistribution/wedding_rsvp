@@ -25,14 +25,3 @@ class Rsvp(models.Model):
     attendance = models.BooleanField(default=None)
     guests = models.PositiveSmallIntegerField(default=0)
     meal_preference = models.CharField(max_length=3, choices=MEAL_CHOICES)
-
-
-class RsvpForm(ModelForm):
-    """This is the form for the Rsvp model.
-    """
-    class Meta:
-        model = Rsvp
-        fields = ['person',
-                  'attendance',
-                  'guests',
-                  'meal_preference']
