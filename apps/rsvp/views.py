@@ -1,5 +1,8 @@
-from django.http import HttpResponseRedirect
 from django.contrib.formtools.wizard.views import SessionWizardView
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.views.generic import DetailView
+from rsvp.models import Person
 
 
 class RsvpWizardView(SessionWizardView):
@@ -11,5 +14,18 @@ class RsvpWizardView(SessionWizardView):
     template_name = 'rsvp/attendance.html'
 
     def done(self, form_list, **kwargs):
-        print(form_list)
-        return HttpResponseRedirect('redirect-page')
+        person = self.get_cleaned_data_for_step('0')['person']
+        url = reverse('confirmation', kwargs={'slug': person.slug})
+        return HttpResponseRedirect(url)
+
+
+class ConfirmationView(DetailView):
+    """Class based view for confirmation page of Rsvp form submission.
+    Returns message thanking user for submitting Rsvp.
+    """
+    model = Person
+    template_name = 'rsvp/confirmation.html'
+    slug_field = 'slug'
+
+    def get_context_data(self, **kwargs):
+        return super(ConfirmationView, self).get_context_data(**kwargs)
