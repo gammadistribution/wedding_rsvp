@@ -13,7 +13,17 @@ class RsvpWizardView(SessionWizardView):
     """
     template_name = 'rsvp/attendance.html'
 
+    def get_form(self, step=None, data=None, files=None):
+        """Override get_form method of SessionWizardView.
+        """
+        form = super(RsvpWizardView, self).get_form(step, data, files)
+
+        return form
+
     def done(self, form_list, **kwargs):
+        """When form is complete redirect to personalized confirmation page.
+        """
+        # Must save data when done
         person = self.get_cleaned_data_for_step('0')['person']
         url = reverse('confirmation', kwargs={'slug': person.slug})
         return HttpResponseRedirect(url)
