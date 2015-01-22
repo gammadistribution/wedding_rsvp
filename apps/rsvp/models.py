@@ -1,13 +1,29 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class Person(models.Model):
     """This model holds personal information about an individual. It stores
     the first name, last name, and email address of a person.
     """
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254, primary_key=True)
+    first_name = models.CharField('first name of person',
+                                  max_length=50)
+    last_name = models.CharField('last name of person',
+                                 max_length=50)
+    email = models.EmailField('email address submitted for person',
+                              max_length=254, primary_key=True)
+    slug = models.SlugField('slug to identify person',
+                            editable=False,
+                            max_length=101)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify('{0}-{1}'.format(self.first_name,
+                                             self.last_name))
+        super(Person, self).save(*args, **kwargs)
+
+    def __str__(self):
+        message = 'email: {0}, last name: {1}, first name {2}'
+        return message.format(self.email, self.last_name, self.first_name)
 
 
 class Rsvp(models.Model):
@@ -20,7 +36,14 @@ class Rsvp(models.Model):
         ('VEG', 'Vegetarian')
     ]
 
-    person = models.OneToOneField(Person, primary_key=True)
-    attendance = models.BooleanField(default=None)
-    guests = models.PositiveSmallIntegerField(default=0)
-    meal_preference = models.CharField(max_length=3, choices=MEAL_CHOICES)
+    person = models.OneToOneField(Person, primary_key=True,
+                                  verbose_name='Person associated to Rsvp')
+    attendance = models.BooleanField('True if Person is attending',
+                                     default=None)
+    guests = models.PositiveSmallIntegerField('Number of guests of Person',
+                                              default=0)
+    meal_preference = models.CharField('Meal chosen by Person',
+                                       max_length=3,
+                                       null=False,
+                                       default=MEAL_CHOICES[0][0],
+                                       choices=MEAL_CHOICES)
