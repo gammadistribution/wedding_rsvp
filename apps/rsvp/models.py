@@ -22,7 +22,7 @@ class Person(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify('{0}-{1}'.format(self.first_name,
                                              self.last_name))
-        for field_name in ['first_name', 'last_name', 'email']:
+        for field_name in ['first_name', 'last_name']:
             val = getattr(self, field_name, False)
             if val:
                 setattr(self, field_name, val.capitalize())

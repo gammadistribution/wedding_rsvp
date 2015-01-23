@@ -14,5 +14,5 @@ urlpatterns = patterns('',
                            name='rsvp_form'),
                        url(regex['confirmation'],
                            views.ConfirmationView.as_view(),
-                           name='confirmation')
+                           name='confirmation'),
                        )

@@ -12,21 +12,19 @@ class RsvpAttendanceForm(forms.Form):
     email = forms.EmailField(label='Email Address', max_length=254)
     attendance = forms.BooleanField(label='Attendance', required=False)
 
-    def is_valid(self):
-        """Check if the form is valid. Run normal checks then see if Person
-        has already filled out Rsvp before. If Person exists, then form is
-        not valid and should return message that Person already returned
-        Rsvp.
+    def clean(self):
+        """When cleaning data, check to see if email already submitted for
+        person. If so, raise Validation error.
         """
-        valid = super(RsvpAttendanceForm, self).is_valid()
+        cleaned_data = super(RsvpAttendanceForm, self).clean()
 
         try:
-            models.Person.objects.get(self.cleaned_data['email'])
-            valid = False
+            models.Person.objects.get(email=cleaned_data['email'])
+            message = 'An Rsvp has already been submitted for this email'
+            message += ' address.'
+            raise forms.ValidationError(message)
         except models.Person.DoesNotExist:
-            valid = True
-
-        return valid
+            pass
 
 
 class RsvpPreferenceForm(ModelForm):
