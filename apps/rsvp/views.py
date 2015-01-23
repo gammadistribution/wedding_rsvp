@@ -2,7 +2,7 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView
-from rsvp.models import Person
+from rsvp.models import Person, Rsvp
 
 
 class RsvpWizardView(SessionWizardView):
@@ -12,6 +12,17 @@ class RsvpWizardView(SessionWizardView):
     RsvpPreferenceForm and collect data for rest of model.
     """
     template_name = 'rsvp/attendance.html'
+
+    def create_person(self):
+        """Using data gained from step 0 of form wizard create and save
+        instance of model rsvp.models.Person.
+        """
+        data = self.get_cleaned_data_for_step('0')
+        person = Person.objects.create(first_name=data['first_name'],
+                                       last_name=data['last_name'],
+                                       email=data['email'])
+
+        return person
 
     def get_form(self, step=None, data=None, files=None):
         """Override get_form method of SessionWizardView.
@@ -24,7 +35,8 @@ class RsvpWizardView(SessionWizardView):
         """When form is complete redirect to personalized confirmation page.
         """
         # Must save data when done
-        person = self.get_cleaned_data_for_step('0')['person']
+        person = self.create_person()
+
         url = reverse('confirmation', kwargs={'slug': person.slug})
         return HttpResponseRedirect(url)
 
