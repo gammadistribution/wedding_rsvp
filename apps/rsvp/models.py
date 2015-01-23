@@ -16,6 +16,9 @@ class Person(models.Model):
                             editable=False,
                             max_length=101)
 
+    class Meta:
+        unique_together = (('first_name', 'last_name', 'email'),)
+
     def save(self, *args, **kwargs):
         self.slug = slugify('{0}-{1}'.format(self.first_name,
                                              self.last_name))
