@@ -10,7 +10,7 @@ class RsvpAttendanceForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=50)
     last_name = forms.CharField(label='Last Name', max_length=50)
     email = forms.EmailField(label='Email Address', max_length=254)
-    attendance = forms.BooleanField(label='Attendance')
+    attendance = forms.BooleanField(label='Attendance', required=False)
 
 
 class RsvpPreferenceForm(ModelForm):
