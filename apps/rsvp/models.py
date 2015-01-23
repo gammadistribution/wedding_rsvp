@@ -22,6 +22,10 @@ class Person(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify('{0}-{1}'.format(self.first_name,
                                              self.last_name))
+        for field_name in ['first_name', 'last_name', 'email']:
+            val = getattr(self, field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
         super(Person, self).save(*args, **kwargs)
 
     def __str__(self):
