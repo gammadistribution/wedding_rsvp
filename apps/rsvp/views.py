@@ -1,8 +1,8 @@
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, TemplateView
-from rsvp.models import Person
+from django.views.generic import ListView
+from rsvp.models import Person, Rsvp
 
 
 class RsvpWizardView(SessionWizardView):
@@ -13,22 +13,39 @@ class RsvpWizardView(SessionWizardView):
     """
     template_name = 'rsvp/attendance.html'
 
-    def create_person(self):
+    def create_person(self, cleaned_data):
         """Using data gained from step 0 of form wizard create and save
         instance of model rsvp.models.Person.
         """
-        data = self.get_cleaned_data_for_step('0')
-        person = Person.objects.create(first_name=data['first_name'],
-                                       last_name=data['last_name'],
-                                       email=data['email'])
+        person = Person.objects.create(first_name=cleaned_data['first_name'],
+                                       last_name=cleaned_data['last_name'],
+                                       email=cleaned_data['email'])
 
         return person
+
+    def create_rsvp(self, cleaned_data):
+        """Using data gained from both steps, create and save
+        instance of model rsvp.models.Rsvp.
+        """
+        person = Person.objects.get(email=cleaned_data['email'])
+        meal_preference = cleaned_data['meal_preference']
+        rsvp = Rsvp.objects.create(person=person,
+                                   attendance=cleaned_data['attendance'],
+                                   guests=cleaned_data['guests'],
+                                   meal_preference=meal_preference)
+
+        return rsvp
 
     def done(self, form_list, **kwargs):
         """When form is complete redirect to personalized confirmation page.
         """
-        # Must save data when done
-        person = self.create_person()
+        cleaned_data = {}
+        for form in form_list:
+            cleaned_data.update(form.cleaned_data)
+
+        person = self.create_person(cleaned_data)
+
+        self.create_rsvp(cleaned_data)
 
         url = reverse('confirmation', kwargs={'slug': person.slug})
 

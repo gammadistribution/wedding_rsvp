@@ -52,5 +52,4 @@ class Rsvp(models.Model):
     meal_preference = models.CharField('Meal chosen by Person',
                                        max_length=3,
                                        null=True,
-                                       default=MEAL_CHOICES[0][0],
                                        choices=MEAL_CHOICES)
