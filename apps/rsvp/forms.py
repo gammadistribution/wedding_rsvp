@@ -12,6 +12,22 @@ class RsvpAttendanceForm(forms.Form):
     email = forms.EmailField(label='Email Address', max_length=254)
     attendance = forms.BooleanField(label='Attendance', required=False)
 
+    def is_valid(self):
+        """Check if the form is valid. Run normal checks then see if Person
+        has already filled out Rsvp before. If Person exists, then form is
+        not valid and should return message that Person already returned
+        Rsvp.
+        """
+        valid = super(RsvpAttendanceForm, self).is_valid()
+
+        try:
+            models.Person.objects.get(self.cleaned_data['email'])
+            valid = False
+        except models.Person.DoesNotExist:
+            valid = True
+
+        return valid
+
 
 class RsvpPreferenceForm(ModelForm):
     """This is part 2 of the form to submit for the Rsvp model. It will gather
