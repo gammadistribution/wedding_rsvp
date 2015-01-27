@@ -7,10 +7,17 @@ class RsvpAttendanceForm(forms.Form):
     """This is part 1 of the form to submit for the Rsvp model. It will gather
     information about the person and attendance fields of the Rsvp model.
     """
+    BOOLEAN_CHOICES = ((True, "Wouldn't miss it for the world."),
+                       (False, "Regretfully, cannot make it."))
+    ATTENDANCE_LABEL = 'Will you be joining us for the big day?'
+
     first_name = forms.CharField(label='First Name', max_length=50)
     last_name = forms.CharField(label='Last Name', max_length=50)
-    email = forms.EmailField(label='Email Address', max_length=254)
-    attendance = forms.BooleanField(label='Attendance', required=False)
+    email = forms.EmailField(label='Email', max_length=254)
+    attendance = forms.ChoiceField(label=ATTENDANCE_LABEL,
+                                   choices=BOOLEAN_CHOICES,
+                                   widget=forms.RadioSelect,
+                                   initial=False)
 
     def clean(self):
         """When cleaning data, check to see if email already submitted for
@@ -34,8 +41,11 @@ class RsvpPreferenceForm(ModelForm):
     This part of the form should only appear if the attendance option was
     selected as False.
     """
+    music_preference = forms.CharField(required=False)
+
     class Meta:
         model = models.Rsvp
         fields = ['guests',
                   'meal_preference',
                   'music_preference']
+        widgets = {'meal_preference': forms.RadioSelect}

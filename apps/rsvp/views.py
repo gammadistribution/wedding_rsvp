@@ -11,7 +11,11 @@ def skip_wizard_step(rsvp_wizard):
     """
     cleaned_data = rsvp_wizard.get_cleaned_data_for_step('0') or {}
 
-    return cleaned_data.get('attendance', False)
+    attendance = cleaned_data.get('attendance', 'False')
+
+    attendance = True if attendance == 'True' else False
+
+    return attendance
 
 
 class RsvpWizardView(SessionWizardView):
@@ -43,8 +47,10 @@ class RsvpWizardView(SessionWizardView):
         meal_preference = cleaned_data.get('meal_preference')
         guests = cleaned_data.get('guests', 0)
         music_preference = cleaned_data.get('music_preference')
+        attendance = cleaned_data.get('attendance', 'False')
+        attendance = True if attendance == 'True' else False
         rsvp = Rsvp.objects.create(person=person,
-                                   attendance=cleaned_data['attendance'],
+                                   attendance=attendance,
                                    guests=guests,
                                    meal_preference=meal_preference,
                                    music_preference=music_preference)
