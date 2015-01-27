@@ -36,4 +36,5 @@ class RsvpPreferenceForm(ModelForm):
     class Meta:
         model = models.Rsvp
         fields = ['guests',
-                  'meal_preference']
+                  'meal_preference',
+                  'music_preference']
