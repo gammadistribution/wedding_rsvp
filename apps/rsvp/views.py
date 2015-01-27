@@ -5,6 +5,15 @@ from django.views.generic import ListView
 from rsvp.models import Person, Rsvp
 
 
+def skip_wizard_step(rsvp_wizard):
+    """In RsvpWizardView, if 'attendance' on step 0 of the form is False,
+    then skip step 1 and go to done portion of form.
+    """
+    cleaned_data = rsvp_wizard.get_cleaned_data_for_step('0') or {}
+
+    return cleaned_data.get('attendance', False)
+
+
 class RsvpWizardView(SessionWizardView):
     """Class based view for Form Wizard for RsvpAttendanceForm and
     RsvpPreferenceForm for Rsvp model. Creates page first for
@@ -24,15 +33,21 @@ class RsvpWizardView(SessionWizardView):
         return person
 
     def create_rsvp(self, cleaned_data):
-        """Using data gained from both steps, create and save
-        instance of model rsvp.models.Rsvp.
+        """Using data gained from both steps, create and save instance of model
+        rsvp.models.Rsvp. If step 1 was skipped, then return defaults for data
+        that would have been gained in that step, i.e. return None for
+        meal_preference, 0 for guests, and None for music_preference if step
+        1 was skipped.
         """
         person = Person.objects.get(email=cleaned_data['email'])
-        meal_preference = cleaned_data['meal_preference']
+        meal_preference = cleaned_data.get('meal_preference')
+        guests = cleaned_data.get('guests', 0)
+        music_preference = cleaned_data.get('music_preference')
         rsvp = Rsvp.objects.create(person=person,
                                    attendance=cleaned_data['attendance'],
-                                   guests=cleaned_data['guests'],
-                                   meal_preference=meal_preference)
+                                   guests=guests,
+                                   meal_preference=meal_preference,
+                                   music_preference=music_preference)
 
         return rsvp
 
@@ -54,7 +69,8 @@ class RsvpWizardView(SessionWizardView):
 
 class ConfirmationView(ListView):
     """Class based view for confirmation page of Rsvp form submission.
-    Returns message thanking user for submitting Rsvp.
+    Returns message thanking user for submitting Rsvp. The ListView is used
+    as the first name and last name is not guaranteed to be unique.
     """
     model = Person
     template_name = 'rsvp/confirmation.html'

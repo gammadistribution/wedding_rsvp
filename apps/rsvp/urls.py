@@ -1,18 +1,24 @@
 from django.conf.urls import patterns, url
 from rsvp.forms import RsvpAttendanceForm, RsvpPreferenceForm
-from rsvp import views
+from rsvp.views import ConfirmationView, RsvpWizardView
+from rsvp.views import skip_wizard_step
 
 
 regex = {'confirmation':
          r'attendance/(?P<slug>[^/]+)$'}
 
 
+# Use this condition for FormWizard to skip from step 0 to complete.
+condition = {'1': skip_wizard_step}
+
+
 urlpatterns = patterns('',
                        url(r'attendance$',
-                           views.RsvpWizardView.as_view([RsvpAttendanceForm,
-                                                         RsvpPreferenceForm]),
+                           RsvpWizardView.as_view([RsvpAttendanceForm,
+                                                   RsvpPreferenceForm],
+                                                  condition_dict=condition),
                            name='rsvp_form'),
                        url(regex['confirmation'],
-                           views.ConfirmationView.as_view(),
+                           ConfirmationView.as_view(),
                            name='confirmation'),
                        )

@@ -2,4 +2,11 @@
 ** Show the steps through breadcrumbs instead of through text at top.
 * Clean up POST buttons for form.
 * Add in rest of the site i.e. add in static files and html.
-* If attendance == no, then redirect to thank you page.
+* DONE If attendance == no, then redirect to thank you page.
+  CLOSED: [2015-01-26 Mon 23:26]
+  - CLOSING NOTE [2015-01-26 Mon 23:26] \\
+    function skip_wizard_step added in views
+* DONE Add field for music preference to Rsvp model.
+  CLOSED: [2015-01-26 Mon 23:26]
+  - CLOSING NOTE [2015-01-26 Mon 23:26] \\
+    field added and then migrated in version 0007
