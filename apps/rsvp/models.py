@@ -41,10 +41,13 @@ class Rsvp(models.Model):
         ('CHI', 'Chicken'),
         ('VEG', 'Vegetarian')
     ]
+    BOOLEAN_CHOICES = ((True, "Wouldn't miss it for the world."),
+                       (False, "Regretfully, cannot make it."))
 
     person = models.OneToOneField(Person, primary_key=True,
                                   verbose_name='Person associated to Rsvp')
     attendance = models.BooleanField('True if Person is attending',
+                                     choices=BOOLEAN_CHOICES,
                                      default=None)
     guests = models.PositiveSmallIntegerField('Number of guests of Person',
                                               default=0)
