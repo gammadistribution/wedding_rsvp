@@ -1,7 +1,7 @@
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView
+from django.views.generic import DetailView
 from rsvp.models import Person, Rsvp
 
 
@@ -67,7 +67,7 @@ class RsvpWizardView(SessionWizardView):
         return HttpResponseRedirect(url)
 
 
-class ConfirmationView(ListView):
+class ConfirmationView(DetailView):
     """Class based view for confirmation page of Rsvp form submission.
     Returns message thanking user for submitting Rsvp. The ListView is used
     as the first name and last name is not guaranteed to be unique.

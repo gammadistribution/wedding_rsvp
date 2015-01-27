@@ -1,1 +1,8 @@
-Thank you
+Thank you {{ person.first_name }} {{ person.last_name }}, your RSVP has
+been received.
+
+{% if person.rsvp.attendance %}
+  We will see you at the wedding.
+{% else %}
+  We are sorry you cannot attend.
+{% endif %}

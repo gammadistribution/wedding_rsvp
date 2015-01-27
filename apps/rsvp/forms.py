@@ -17,9 +17,10 @@ class RsvpAttendanceForm(forms.Form):
         person. If so, raise Validation error.
         """
         cleaned_data = super(RsvpAttendanceForm, self).clean()
+        email = cleaned_data.get('email')
 
         try:
-            models.Person.objects.get(email=cleaned_data['email'])
+            models.Person.objects.get(email=email)
             message = 'An Rsvp has already been submitted for this email'
             message += ' address.'
             raise forms.ValidationError(message)

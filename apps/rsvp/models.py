@@ -20,12 +20,11 @@ class Person(models.Model):
         unique_together = (('first_name', 'last_name', 'email'),)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify('{0}-{1}'.format(self.first_name,
-                                             self.last_name))
+        self.slug = slugify('{0}'.format(self.email))
         for field_name in ['first_name', 'last_name']:
             val = getattr(self, field_name, False)
             if val:
-                setattr(self, field_name, val.capitalize())
+                setattr(self, field_name, val.strip().capitalize())
         super(Person, self).save(*args, **kwargs)
 
     def __str__(self):
