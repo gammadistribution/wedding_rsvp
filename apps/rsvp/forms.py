@@ -14,7 +14,10 @@ class RsvpAttendanceForm(ModelForm):
 
     class Meta:
         model = models.Rsvp
-        fields = ['attendance']
+        fields = ['first_name',
+                  'last_name',
+                  'email',
+                  'attendance']
         widgets = {'attendance': forms.RadioSelect}
         labels = {'attendance': 'Will you be joining us for the big day?'}
 

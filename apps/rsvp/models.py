@@ -54,7 +54,8 @@ class Rsvp(models.Model):
     meal_preference = models.CharField('Meal chosen by Person',
                                        max_length=3,
                                        null=True,
-                                       choices=MEAL_CHOICES)
+                                       choices=MEAL_CHOICES,
+                                       default=None)
     music_preference = models.CharField('Music chosen by person',
                                         null=True,
                                         max_length=500)
