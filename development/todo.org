@@ -1,6 +1,9 @@
-* Breadcrumbs instead of steps to indicate progress on form.
+* DONE Breadcrumbs instead of steps to indicate progress on form.
+  CLOSED: [2015-01-27 Tue 22:48]
+  - CLOSING NOTE [2015-01-27 Tue 22:48] \\
+    Will not implement.
 ** Show the steps through breadcrumbs instead of through text at top.
-* Clean up POST buttons for form.
+* IN-PROGRESS Clean up POST buttons for form.
 * Add in rest of the site i.e. add in static files and html.
 * DONE If attendance == no, then redirect to thank you page.
   CLOSED: [2015-01-26 Mon 23:26]

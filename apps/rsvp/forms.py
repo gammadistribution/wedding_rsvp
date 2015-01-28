@@ -56,12 +56,15 @@ class RsvpPreferenceForm(ModelForm):
     This part of the form should only appear if the attendance option was
     selected as False.
     """
-    music_preference = forms.CharField(required=False)
+    music_preference = forms.CharField(label='Musical Suggestions',
+                                       required=False)
 
     class Meta:
         model = models.Rsvp
         fields = ['guests',
-                  'meal_preference',
-                  'music_preference']
+                  'music_preference',
+                  'meal_preference']
         widgets = {'meal_preference':
                    forms.RadioSelect(renderer=HorizontalRadioRenderer)}
+        labels = {'guests': 'Additional Guests',
+                  'meal_preference': 'Meal Preference'}
