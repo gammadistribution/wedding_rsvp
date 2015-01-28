@@ -19,7 +19,6 @@ class RsvpAttendanceForm(ModelForm):
     """This is part 1 of the form to submit for the Rsvp model. It will gather
     information about the person and attendance fields of the Rsvp model.
     """
-
     first_name = forms.CharField(label='First Name', max_length=50)
     last_name = forms.CharField(label='Last Name', max_length=50)
     email = forms.EmailField(label='Email', max_length=254)
@@ -33,6 +32,13 @@ class RsvpAttendanceForm(ModelForm):
         widgets = {'attendance':
                    forms.RadioSelect(renderer=HorizontalRadioRenderer)}
         labels = {'attendance': 'Will you be joining us for the big day?'}
+
+    def __init__(self, *args, **kwargs):
+        """Define __init__ explicitly to override label_suffix to be empty
+        string.
+        """
+        super(RsvpAttendanceForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
 
     def clean(self):
         """When cleaning data, check to see if email already submitted for
@@ -68,3 +74,10 @@ class RsvpPreferenceForm(ModelForm):
                    forms.RadioSelect(renderer=HorizontalRadioRenderer)}
         labels = {'guests': 'Additional Guests',
                   'meal_preference': 'Meal Preference'}
+
+    def __init__(self, *args, **kwargs):
+        """Define __init__ explicitly to override label_suffix to be empty
+        string.
+        """
+        super(RsvpPreferenceForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
