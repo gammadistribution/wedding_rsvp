@@ -1,6 +1,18 @@
 from django import forms
 from django.forms import ModelForm
 from rsvp import models
+from django.utils.safestring import mark_safe
+
+
+class HorizontalRadioRenderer(forms.RadioSelect.renderer):
+    """Custom class for horizontal radio buttons. Set this as the renderer
+    forms.RadioSelect to have the horizontal buttons.
+    """
+    def render(self):
+        """Override RadioSelect renderer to make the buttons format
+    horizontally.
+        """
+        return mark_safe('\n'.join(['{0}\n'.format(w) for w in self]))
 
 
 class RsvpAttendanceForm(ModelForm):
@@ -18,7 +30,8 @@ class RsvpAttendanceForm(ModelForm):
                   'last_name',
                   'email',
                   'attendance']
-        widgets = {'attendance': forms.RadioSelect}
+        widgets = {'attendance':
+                   forms.RadioSelect(renderer=HorizontalRadioRenderer)}
         labels = {'attendance': 'Will you be joining us for the big day?'}
 
     def clean(self):
@@ -50,4 +63,5 @@ class RsvpPreferenceForm(ModelForm):
         fields = ['guests',
                   'meal_preference',
                   'music_preference']
-        widgets = {'meal_preference': forms.RadioSelect}
+        widgets = {'meal_preference':
+                   forms.RadioSelect(renderer=HorizontalRadioRenderer)}
