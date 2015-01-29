@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,17 +12,15 @@
     <title>Jacqueline & Adam</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-     <link href="css/bootstrap.css" rel="stylesheet">
-
-
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/grayscale.css" rel="stylesheet">
-    <link href="galleria.classic.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/grayscale.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/galleria.classic.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
@@ -34,86 +32,89 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-</head>
+  </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+  <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
     <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light">J&A</span>
-                    </a>
-            </div>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand page-scroll" href="/">
+            <i class="fa fa-play-circle"></i>
+            <span class="light">J&A</span>
+          </a>
+        </div>
 
-       <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-right navbar-main-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-      <li class="hidden">
-        <li class="active"><a href="#about">Our Love Story <span class="sr-only">(current)</span></a></li>
-        <li><a class="page-scroll" href="#rsvp">RSVP</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Wedding Weekend <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a class="page-scroll"  href="#details">Wedding Details</a></li>
-            <li><a class="page-scroll"  href="#accommodations">Accommodations</a></li>
-            <li><a class="page-scroll"  href="#todo">Things to Do</a></li>
-            <li class="divider"></li>
-            <li><a class="page-scroll"  href="#registry">Registry</a></li>
-            <li class="divider"></li>
-            <li><a class="page-scroll"  href="#map">Maps & Directions</a></li>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden">
+            <li class="active"><a href="#about">Our Love Story <span class="sr-only">(current)</span></a></li>
+            <li><a href="{% url 'rsvp_form' %}">RSVP</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Wedding Weekend <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a class="page-scroll"  href="#details">Wedding Details</a></li>
+                <li><a class="page-scroll"  href="#accommodations">Accommodations</a></li>
+                <li><a class="page-scroll"  href="#todo">Things to Do</a></li>
+                <li class="divider"></li>
+                <li><a class="page-scroll"  href="#registry">Registry</a></li>
+                <li class="divider"></li>
+                <li><a class="page-scroll"  href="#map">Maps & Directions</a></li>
+              </ul>
           </ul>
-        </li>
-        </li>
-      </ul>
-
+        </div>
         <!-- /.container -->
     </nav>
 
 
-    {% block content %}{% endblock%}
+    <div class="container text-center">
+      {% block content %}{% endblock%}
+    </div>
 
-        <!-- Footer -->
+
+    <!-- Footer -->
     <footer>
-        <div class="container text-center">
-            <p>Copyright &copy; Adam & Jacqueline 2014</p>
-        </div>
+      <div class="container text-center">
+        <p>Copyright &copy; Adam & Jacqueline 2014</p>
+      </div>
     </footer>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="js/jquery.easing.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.easing.min.js"></script>
 
     <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="js/grayscale.js"></script>
+    <script src="{{ STATIC_URL }}js/grayscale.js"></script>
 
-	  <!-- load jQuery -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <!-- load jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 
-        <!-- load Galleria -->
-        <script src="js/galleria-1.4.2.min.js"></script>
+    <!-- load Galleria -->
+    <script src="{{ STATIC_URL }}js/galleria.classic.min.js"></script>
 
 
     <script>
+      Galleria.loadTheme('galleria.classic.min.js');
 
-		Galleria.loadTheme('galleria.classic.min.js');
-
-    // Initialize Galleria
-    Galleria.run('#galleria');
+      // Initialize Galleria
+      Galleria.run('#galleria');
     </script>
 
-</body>
+  </body>
 
 </html>
